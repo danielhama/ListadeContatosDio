@@ -39,7 +39,7 @@ class ContatoModel {
       data['image_path'] = "";
     } else {
       data['image_path'] = imagePath;
-    }0
+    }
     return data;
   }
 }

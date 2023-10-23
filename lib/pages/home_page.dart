@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:listacontatos/Theme/theme.dart';
+import 'package:listacontatos/model/contato_model.dart';
 import 'package:listacontatos/pages/modal_photo.dart';
 import 'package:listacontatos/repository/back4app_repository.dart';
 import 'package:listacontatos/repository/back4app_repository_model.dart';
@@ -19,6 +20,10 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController controllerPesquisa = TextEditingController();
   Back4appRepositoryModel contatos = Back4appRepositoryModel();
   Back4appRepository repository = Back4appRepository();
+  List<ContatoModel>? dados = <ContatoModel>[];
+  List<ContatoModel>? dadospesquisa = <ContatoModel>[];
+  bool pesquisaativa = false;
+
 
   @override
   void initState() {
@@ -28,6 +33,7 @@ class _HomePageState extends State<HomePage> {
 
   void obterContatos() async {
     contatos = await repository.obterContatos();
+    dados = contatos.contatos;
     setState(() {});
   }
 
@@ -87,10 +93,39 @@ class _HomePageState extends State<HomePage> {
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       4, 0, 0, 0),
-                                  child: TextFormField(
+                                  child: TextField(
+                                    onSubmitted: (value) {
+                                      if (dados != null) {
+                                        dadospesquisa = [];
+                                        for (var element in dados!) {
+                                          if (element.nome
+                                              .toLowerCase()
+                                              .contains(value.toLowerCase())) {
+                                            dadospesquisa?.add(element);
+                                            setState(() {
+                                              pesquisaativa = true;
+                                            });
+                                          }
+                                        }
+                                      }
+                                    },
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    
                                     controller: controllerPesquisa,
                                     obscureText: false,
+                                    cursorColor: Colors.black,
+                                    
                                     decoration: InputDecoration(
+                                      suffixIcon: IconButton(
+                                          icon: Icon(Icons.clear),
+                                          onPressed: () {
+                                            controllerPesquisa.clear();
+                                            setState(() {
+                                              pesquisaativa = false;
+                                            });
+                                          }),
+  
                                       labelText: 'Pesquisar contatos...',
                                       hintStyle:
                                           ThemeCustom.of(context).bodyLarge,
@@ -99,7 +134,10 @@ class _HomePageState extends State<HomePage> {
                                       errorBorder: InputBorder.none,
                                       focusedErrorBorder: InputBorder.none,
                                     ),
-                                    style: ThemeCustom.of(context).bodyMedium,
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 18),
+                                    
+                                    
                                   ),
                                 ),
                               ),
@@ -114,12 +152,13 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
-              child: (contatos.contatos != null)
+              child: (dados != null)
                   ? SizedBox(
                       width: double.infinity,
                       height: MediaQuery.sizeOf(context).height * .7 -
                           MediaQuery.of(context).viewInsets.bottom,
-                      child: ListView.builder(
+                      child: !pesquisaativa
+                          ? ListView.builder(
                           itemCount: contatos.contatos!.length,
                           itemBuilder: (context, index) {
                             return Container(
@@ -207,7 +246,102 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             );
-                          }),
+                              })
+                          : ListView.builder(
+                              itemCount: dadospesquisa!.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            8, 8, 8, 8),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(60),
+                                          child: (dadospesquisa![index]
+                                                      .imagePath !=
+                                                  "")
+                                              ? Image.file(
+                                                  File(dadospesquisa![index]
+                                                          .imagePath ??
+                                                      ""),
+                                                  width: 60,
+                                                  height: 60,
+                                                  fit: BoxFit.cover)
+                                              : Image.network(
+                                                  "https://cbissn.ibict.br/images/phocagallery/galeria2/thumbs/phoca_thumb_l_image03_grd.png",
+                                                  width: 60,
+                                                  height: 60,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(12, 0, 0, 0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                dadospesquisa![index].nome,
+                                                style: ThemeCustom.of(context)
+                                                    .titleMedium
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      color: ThemeCustom.of(
+                                                              context)
+                                                          .secondaryText,
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                              ),
+                                              Text(
+                                                dadospesquisa![index].telefone,
+                                                style: ThemeCustom.of(context)
+                                                    .bodySmall
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      color: ThemeCustom.of(
+                                                              context)
+                                                          .secondaryText,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 36,
+                                          height: 36,
+                                          decoration: BoxDecoration(
+                                            color: ThemeCustom.of(context)
+                                                .secondaryBackground,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(4, 4, 4, 4),
+                                            child: Icon(
+                                              Icons
+                                                  .keyboard_arrow_right_rounded,
+                                              color: ThemeCustom.of(context)
+                                                  .secondaryText,
+                                              size: 24,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }),
                     )
                   : Container(),
             ),

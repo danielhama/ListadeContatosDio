@@ -138,7 +138,7 @@ class LightModeTheme extends ThemeCustom {
   late Color secondary = const Color(0xFF590219);
   late Color tertiary = const Color(0xFF395659);
   late Color alternate = const Color(0xFFADB6BC);
-  late Color primaryText = const Color(0xFFFFFFFF);
+  late Color primaryText = Color.fromARGB(255, 0, 0, 0);
   late Color secondaryText = const Color(0xFF000000);
   late Color primaryBackground = const Color(0xFF000000);
   late Color secondaryBackground = const Color(0xFFFFFFFF);

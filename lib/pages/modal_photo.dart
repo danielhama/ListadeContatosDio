@@ -73,7 +73,7 @@ class _ChangePhotoWidgetState extends State<ChangePhotoWidget> {
   }
 
   @override
-  Future<Widget> build(BuildContext context) async {
+  Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Lista de Contatos',
         theme: ThemeData(
@@ -213,8 +213,7 @@ class _ChangePhotoWidgetState extends State<ChangePhotoWidget> {
                                                                           .path);
                                                               setState(() {});
                   
-                                                              Navigator.pop(
-                                                                  context);
+
 
                                                               cropImage(photo!);
                                                             }
@@ -234,8 +233,7 @@ class _ChangePhotoWidgetState extends State<ChangePhotoWidget> {
                                                                   .pickImage(
                                                                       source: ImageSource
                                                                           .gallery);
-                                                              Navigator.pop(
-                                                                  context);
+
                                                               setState(() {});
 
                                                               cropImage(photo!);
