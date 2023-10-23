@@ -59,21 +59,6 @@ class _ContatoPageState extends State<ContatoPage> {
     }
   }
 
-  @override
-  void setState(VoidCallback callback) {
-    super.setState(callback);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // contato = ModalRoute.of(context)!.settings.arguments as ContatoModel?;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -250,31 +235,68 @@ class _ContatoPageState extends State<ContatoPage> {
                                           ),
                                         ]),
                                   ),
-                                  SingleChildScrollView(
-                                      child: Column(
-                                    children: [
-                                      Text(widget.contato.nome),
-                                      Text(widget.contato.telefone),
-                                      ElevatedButton(
-                                        onPressed: () => {},
-                                        child: const Text("Alterar"),
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          // Navigator.pop(context);
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const HomePage(
-                                                        title:
-                                                            "Lista de Contato",
-                                                      )));
-                                        },
-                                        child: const Text("Cancelar"),
-                                      ),
-                                    ],
-                                  )),
+                                  Center(
+                                    child: Column(
+                                    
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                    
+                                      children: [
+                                        const Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(0, 8, 0, 8),
+                                          child: Text(
+                                            "Nome",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.black),
+                                          ),
+                                        ),
+                                        Text(
+                                          widget.contato.nome,
+                                          style: const TextStyle(
+                                              fontSize: 22,
+                                              color: Colors.black),
+                                        ),
+                                        const Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(0, 8, 0, 8),
+                                          child: Text(
+                                            "Telefone",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.black),
+                                          ),
+                                        ),
+                                        Text(
+                                          widget.contato.telefone,
+                                          style: const TextStyle(
+                                              fontSize: 22,
+                                              color: Colors.black),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () => {},
+                                          child: const Text("Alterar"),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            // Navigator.pop(context);
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const HomePage(
+                                                          title:
+                                                              "Lista de Contato",
+                                                        )));
+                                          },
+                                          child: const Text("Cancelar"),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ]),
                           ),
                         ),

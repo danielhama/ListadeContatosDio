@@ -153,7 +153,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
-              child: (dados != null)
+              child: (contatos.contatos != null)
                   ? SizedBox(
                       width: double.infinity,
                       height: MediaQuery.sizeOf(context).height * .7 -
@@ -259,7 +259,15 @@ class _HomePageState extends State<HomePage> {
                           : ListView.builder(
                               itemCount: dadospesquisa!.length,
                               itemBuilder: (context, index) {
-                                return Container(
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ContatoPage(
+                                                contato: contatos
+                                                    .contatos![index])));
+                                  },
                                   child: Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
