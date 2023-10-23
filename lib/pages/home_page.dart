@@ -117,7 +117,8 @@ class _HomePageState extends State<HomePage> {
               child: (contatos.contatos != null)
                   ? SizedBox(
                       width: double.infinity,
-                      height: MediaQuery.sizeOf(context).height * .7,
+                      height: MediaQuery.sizeOf(context).height * .7 -
+                          MediaQuery.of(context).viewInsets.bottom,
                       child: ListView.builder(
                           itemCount: contatos.contatos!.length,
                           itemBuilder: (context, index) {
@@ -214,15 +215,19 @@ class _HomePageState extends State<HomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            await showModalBottomSheet(
-              isScrollControlled: true,
-              backgroundColor: Colors.transparent,
-              enableDrag: false,
-              context: context,
-              builder: (context) {
-                return const ChangePhotoWidget();
-              },
-            );
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ChangePhotoWidget()));
+            // await showModalBottomSheet(
+            //   isScrollControlled: true,
+            //   backgroundColor: Colors.transparent,
+            //   enableDrag: false,
+            //   context: context,
+            //   builder: (context) {
+            //     return const ChangePhotoWidget();
+            //   },
+            // );
           },
           backgroundColor: ThemeCustom.of(context).primary,
           elevation: 8,

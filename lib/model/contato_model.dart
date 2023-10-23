@@ -35,7 +35,11 @@ class ContatoModel {
     // data['updatedAt'] = updatedAt;
     data['nome'] = nome;
     data['telefone'] = telefone;
-    data['image_path'] = imagePath;
+    if (imagePath == null) {
+      data['image_path'] = "";
+    } else {
+      data['image_path'] = imagePath;
+    }0
     return data;
   }
 }
