@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:listacontatos/Theme/theme.dart';
 import 'package:listacontatos/model/contato_model.dart';
-import 'package:listacontatos/pages/modal_photo.dart';
+import 'package:listacontatos/pages/addcontato.dart';
+import 'package:listacontatos/pages/vercontato.dart';
 import 'package:listacontatos/repository/back4app_repository.dart';
 import 'package:listacontatos/repository/back4app_repository_model.dart';
 
@@ -118,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                                     
                                     decoration: InputDecoration(
                                       suffixIcon: IconButton(
-                                          icon: Icon(Icons.clear),
+                                          icon: const Icon(Icons.clear),
                                           onPressed: () {
                                             controllerPesquisa.clear();
                                             setState(() {
@@ -134,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                                       errorBorder: InputBorder.none,
                                       focusedErrorBorder: InputBorder.none,
                                     ),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.black, fontSize: 18),
                                     
                                     
@@ -161,7 +162,15 @@ class _HomePageState extends State<HomePage> {
                           ? ListView.builder(
                           itemCount: contatos.contatos!.length,
                           itemBuilder: (context, index) {
-                            return Container(
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ContatoPage(
+                                                contato: contatos
+                                                    .contatos![index])));
+                                  },
                               child: Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     8, 8, 8, 8),

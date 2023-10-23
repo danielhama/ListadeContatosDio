@@ -212,8 +212,6 @@ class _ChangePhotoWidgetState extends State<ChangePhotoWidget> {
                                                                       photo!
                                                                           .path);
                                                               setState(() {});
-                  
-
 
                                                               cropImage(photo!);
                                                             }
